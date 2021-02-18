@@ -76,6 +76,22 @@ byte colPins[COLS] = {6, 7, 18, 4};
 
 Keypad keypad = Keypad(makeKeymap(keys), colPins, rowPins, ROWS, COLS);
 
+long previous_bar_value;
+
+void knob_button()
+{
+  Consumer.press(KNOB_BUTTON);
+  if(bar_value != 0) {
+    previous_bar_value = bar_value;
+    bar_value = 0;
+  } else {
+    bar_value = previous_bar_value;
+  }
+
+  float translated = bar_value * (10.0 / VOLUME_RANGE);
+  update_bar(round(translated));
+}
+
 // Add event listener to we can prossess button presses
 
 void KeyEventListener(KeypadEvent key, KeyState kpadState) {
@@ -121,7 +137,7 @@ void KeyEventListener(KeypadEvent key, KeyState kpadState) {
         Keyboard.press(BUTTON_12);
         break;
       case 'A':
-        Consumer.press(KNOB_BUTTON);
+        knob_button();
         break;
       case 'B':
         nav.doNav(downCmd);
