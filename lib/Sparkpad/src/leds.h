@@ -102,6 +102,8 @@ void update_bar(byte value)
     grid_array[13] = (mask >> 8) & 0xFF;
 
     update_tm1638();
+
+    EEPROM.write(bar_address, bar_value);
 }
 
 void setupDisplay(boolean active, byte intensity)

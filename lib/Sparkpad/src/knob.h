@@ -8,3 +8,4 @@ Encoder knob(20, 19);
 
 long knob_value = 0;
 byte bar_value = 0;
+byte bar_address = 2;

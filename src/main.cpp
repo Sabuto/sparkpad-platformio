@@ -214,6 +214,7 @@ void setup()
   ledBrightness = EEPROM.read(ledBrightnessAddress);
   led_colour_current = ledColour;
   led_brightness_current = ledBrightness;
+  bar_value = EEPROM.read(bar_address);
 
   // keyboard
   Keyboard.begin();
@@ -221,8 +222,9 @@ void setup()
   Consumer.begin();
 
   // Serial output
-  Serial.begin(9600);
-  while(!Serial);
+  // Serial.begin(9600);
+  
+  // while(!Serial);
 
   //OLED
   Wire.begin();
@@ -242,6 +244,10 @@ void setup()
   digitalWrite(clockPin, HIGH);
 
   update_leds();
+
+  // update the led bar
+  float translated = bar_value * (10.0 / VOLUME_RANGE);
+  update_bar(round(translated));
 }
 
 void loop() {
